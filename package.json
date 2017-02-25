@@ -1,0 +1,27 @@
+{
+  "name": "vue-crop-upload",
+  "version": "1.0.0",
+  "description": "vue image crop uploader",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/yangmingkun187/vue-crop-upload.git"
+  },
+  "keywords": [
+    "vue",
+    "image",
+    "upload",
+    "crop"
+  ],
+  "author": "jasonyang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yangmingkun187/vue-crop-upload/issues"
+  },
+  "homepage": "https://github.com/yangmingkun187/vue-crop-upload#readme"
+}
