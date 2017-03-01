@@ -8,7 +8,7 @@
     "image",
     "crop",
     "upload",
-    "plugin",
+    "plugin"
   ],
   "private": true,
   "scripts": {
