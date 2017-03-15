@@ -28,6 +28,7 @@
     width: 100%;
     top: 50%;
     border: 1px solid #ffffff;
+    box-sizing: border-box;
   }
 
   .top-cover {

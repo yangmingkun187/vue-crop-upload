@@ -59,6 +59,15 @@ export default class Drag {
 		_self.originImage.style.transform = 'translate3d(' + offset.x + 'px,' + offset.y + 'px,0)';
 	}
 	
+	isOutVisibility(stopOffset) {
+		const _self = this;
+		
+		return stopOffset.x > 0 && _self.originPosition.left + stopOffset.x > _self.offsetRange.left ||
+			stopOffset.x < 0 && _self.originPosition.right + stopOffset.x < _self.offsetRange.right ||
+			stopOffset.y > 0 && _self.originPosition.top + stopOffset.y > _self.offsetRange.top ||
+			stopOffset.y < 0 && _self.originPosition.bottom + stopOffset.y > _self.offsetRange.bottom;
+	}
+	
 	stopMove(e) {
 		const _self = this;
 		
@@ -72,29 +81,10 @@ export default class Drag {
 			y: stopPosition.y - _self.startPosition.y
 		};
 		
-		if(stopOffset.x > 0 && _self.originPosition.left + stopOffset.x > _self.offsetRange.left) {
+		if(_self.isOutVisibility(stopOffset)) {
 			_self.originImage.style.transform = 'translate3d(0,0,0)';
 			_self.originImage.style.transitionTimingFunction = 'cubic-bezier(0.1, 0.57, 0.1, 1)';
 			_self.originImage.style.transitionDuration = '700ms';
-		}
-		if(stopOffset.x < 0 && _self.originPosition.right + stopOffset.x < _self.offsetRange.right) {
-			_self.originImage.style.transform = 'translate3d(0,0,0)';
-			_self.originImage.style.transitionTimingFunction = 'cubic-bezier(0.1, 0.57, 0.1, 1)';
-			_self.originImage.style.transitionDuration = '700ms';
-		}
-		if(stopOffset.y > 0 && _self.originPosition.top + stopOffset.y > _self.offsetRange.top) {
-			_self.originImage.style.transform = 'translate3d(0,0,0)';
-			_self.originImage.style.transitionTimingFunction = 'cubic-bezier(0.1, 0.57, 0.1, 1)';
-			_self.originImage.style.transitionDuration = '700ms';
-		}
-		if(stopOffset.y < 0 && _self.originPosition.bottom + stopOffset.y > _self.offsetRange.bottom) {
-			_self.originImage.style.transform = 'translate3d(0,0,0)';
-			_self.originImage.style.transitionTimingFunction = 'cubic-bezier(0.1, 0.57, 0.1, 1)';
-			_self.originImage.style.transitionDuration = '700ms';
-		}
-	
-		if(stopPosition.y) {
-			
 		}
 		
 		document.removeEventListener('touchmove', moves, false);
