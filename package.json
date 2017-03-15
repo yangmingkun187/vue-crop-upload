@@ -1,25 +1,29 @@
 {
-  "name": "vue-image-crop-upload",
+  "name": "vue-crop-upload",
+  "description": "vue image cropper uploader",
   "version": "1.0.0",
-  "description": "image cropper uploader for mobile",
-  "main": "index.js",
+  "author": "jason yang <jasonyang187@outlook.com>",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yangmingkun187/vue-crop-upload.git"
+  "dependencies": {
+    "vue": "^2.2.1",
+    "vue-touch": "^1.1.0"
   },
-  "keywords": [
-    "vue",
-    "crop",
-    "image",
-    "upload"
-  ],
-  "author": "JasonYang",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/yangmingkun187/vue-crop-upload/issues"
-  },
-  "homepage": "https://github.com/yangmingkun187/vue-crop-upload#readme"
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-loader": "^6.0.0",
+    "babel-preset-latest": "^6.0.0",
+    "cross-env": "^3.0.0",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "node-sass": "^4.5.0",
+    "sass-loader": "^5.0.1",
+    "vue-loader": "^11.1.4",
+    "vue-template-compiler": "^2.2.1",
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.2.0"
+  }
 }
