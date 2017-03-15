@@ -17,8 +17,6 @@
     top: 50%;
     left: 0;
     transform: translate3d(0,0,0);
-    transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1);
-    transition-duration: 700ms;
   }
 
   .origin-image img {

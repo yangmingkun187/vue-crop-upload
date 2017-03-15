@@ -27,6 +27,9 @@ export default class Drag {
 			y: e.touches[0].clientY,
 		};
 		
+		_self.originImage.style.transitionTimingFunction = '';
+		_self.originImage.style.transitionDuration = '';
+		
 		moves = function(e) {
 			_self.move(e);
 		};
@@ -69,25 +72,25 @@ export default class Drag {
 			y: stopPosition.y - _self.startPosition.y
 		};
 		
-		if(stopOffset.x > 0) {
-			if(_self.originPosition.left + stopOffset.x > _self.offsetRange.left) {
-				_self.originImage.style.transform = 'translate3d(0,0,0)';
-			}
+		if(stopOffset.x > 0 && _self.originPosition.left + stopOffset.x > _self.offsetRange.left) {
+			_self.originImage.style.transform = 'translate3d(0,0,0)';
+			_self.originImage.style.transitionTimingFunction = 'cubic-bezier(0.1, 0.57, 0.1, 1)';
+			_self.originImage.style.transitionDuration = '700ms';
 		}
-		if(stopOffset.x < 0) {
-			if(_self.originPosition.right + stopOffset.x < _self.offsetRange.right) {
-				_self.originImage.style.transform = 'translate3d(0,0,0)';
-			}
+		if(stopOffset.x < 0 && _self.originPosition.right + stopOffset.x < _self.offsetRange.right) {
+			_self.originImage.style.transform = 'translate3d(0,0,0)';
+			_self.originImage.style.transitionTimingFunction = 'cubic-bezier(0.1, 0.57, 0.1, 1)';
+			_self.originImage.style.transitionDuration = '700ms';
 		}
-		if(stopOffset.y > 0) {
-			if(_self.originPosition.top + stopOffset.y > _self.offsetRange.top) {
-				_self.originImage.style.transform = 'translate3d(0,0,0)';
-			}
+		if(stopOffset.y > 0 && _self.originPosition.top + stopOffset.y > _self.offsetRange.top) {
+			_self.originImage.style.transform = 'translate3d(0,0,0)';
+			_self.originImage.style.transitionTimingFunction = 'cubic-bezier(0.1, 0.57, 0.1, 1)';
+			_self.originImage.style.transitionDuration = '700ms';
 		}
-		if(stopOffset.y < 0) {
-			if(_self.originPosition.bottom + stopOffset.y > _self.offsetRange.bottom) {
-				_self.originImage.style.transform = 'translate3d(0,0,0)';
-			}
+		if(stopOffset.y < 0 && _self.originPosition.bottom + stopOffset.y > _self.offsetRange.bottom) {
+			_self.originImage.style.transform = 'translate3d(0,0,0)';
+			_self.originImage.style.transitionTimingFunction = 'cubic-bezier(0.1, 0.57, 0.1, 1)';
+			_self.originImage.style.transitionDuration = '700ms';
 		}
 	
 		if(stopPosition.y) {
