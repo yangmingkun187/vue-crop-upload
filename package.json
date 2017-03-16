@@ -5,12 +5,13 @@
   "author": "jason yang <jasonyang187@outlook.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "dev": "cross-env NODE_ENV=production webpack --progress --hide-modules && node webpack.config.dev.js",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "hammerjs": "^2.0.8",
     "vue": "^2.2.1",
-    "vue-touch": "^1.1.0"
+    "vue-touch": "^2.0.0-beta.4"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

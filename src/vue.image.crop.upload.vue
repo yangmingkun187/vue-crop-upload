@@ -1,8 +1,25 @@
 <style scoped>
+
+  .input-wrapper {
+    display: inline-block;
+    margin: 50px auto;
+    width: 100px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 16px;
+    background-color: #00b473;
+    color: #ffffff;
+  }
+
+  input[type=file] {
+    display: none;
+  }
+
   .upload-image-btn {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    text-align: center;
   }
   .crop-image-wrapper {
     position: relative;
@@ -16,6 +33,7 @@
     width: 100%;
     top: 50%;
     left: 0;
+    font-size: 0;
     transform: translate3d(0,0,0);
   }
 
@@ -48,14 +66,41 @@
     background-color: #000;
     opacity: .6;
   }
-
+  .btn-group {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    z-index: 9;
+    background-color: #000000;
+  }
+  .btn-group button{
+    width: 80px;
+    height: 50px;
+    border: none;
+    font-size: 18px;
+    color: white;
+    background-color: #000000;
+  }
+  .container {
+    width: 100%;
+    height: 100%;
+  }
 </style>
 
 <template>
 
   <div class="upload-image-btn">
     <!--上传-->
-    <input type="file" v-show="!hasImage" v-on:change="change"/>
+    <label for="file" class="input-wrapper" v-show="!hasImage" >
+      上传图片
+      <input id="file" type="file" v-on:change="change"/>
+    </label>
 
     <div class="crop-image-wrapper" v-show="hasImage">
 
@@ -65,11 +110,15 @@
 
       <div class="top-cover" v-bind:style="{height: styleObj.coverHeight + 'px'}"></div>
 
-      <div class="visibility-container"
-           v-on:touchstart.self="drag" v-on:mousedown.self="drag"></div>
+      <div class="visibility-container">
+      </div>
 
       <div class="bottom-cover" v-bind:style="{height: styleObj.coverHeight + 'px'}"></div>
 
+      <div class="btn-group">
+        <button>取消</button>
+        <button>完成</button>
+      </div>
     </div>
 
   </div>
@@ -78,6 +127,8 @@
 
 <script>
 	import Drag from './lib/drag';
+	import Zoom from './lib/zoom';
+	import Hammer from 'hammerjs';
 
 	export default {
 		data() {
@@ -91,11 +142,16 @@
 				},
 				styleObj: {
 					coverHeight : 0
-        }
+        },
+				event: {},
+				state: {rotate: true, doubletap: true}
 			}
 		},
 
 		methods: {
+			reset(e) {
+				console.log(e);
+      },
 
 			change(e) {
 				const _self = this;
@@ -127,8 +183,8 @@
 
       initCropImageWrapper() {
 	      const _self = this;
-	      const screenWidth = window.screen.width;
-	      const screenHeight = window.screen.height;
+	      const screenWidth = document.body.clientWidth;
+	      const screenHeight = document.body.clientHeight;
 
 	      _self.styleObj.coverHeight = (screenHeight - screenWidth) / 2;
 	      document.querySelector('.visibility-container').style.cssText =
@@ -138,17 +194,35 @@
         _self.image.height = screenWidth * _self.image.ratio;
 
 	      document.querySelector('.origin-image').style.cssText =
-		      'margin-top:' + -_self.image.height / 2 + 'px';
+		      'height:'+ _self.image.height + 'px;margin-top:' + -_self.image.height / 2 + 'px';
 
+	      _self.bindHammer();
       },
 
-			drag(e) {
-				e.preventDefault();
-				e.stopPropagation();
-				let $originImage = document.getElementsByClassName('origin-image')[0];
-				let $visibility = document.getElementsByClassName('visibility-container')[0];
-				let dragObj = new Drag($originImage, $visibility, e);
-			}
+			bindHammer() {
+	      let $originImage = document.querySelector('.origin-image');
+	      let $visibility = document.querySelector('.visibility-container');
+	      let hammertime = new Hammer($visibility);
+	      let isScale = false;
+
+	      hammertime.get('pinch').set({ enable: true });
+
+	      Drag(hammertime,$originImage,$visibility);
+
+
+	      hammertime.on('doubletap', function(ev) {
+		      ev.preventDefault();
+		      console.log(ev);
+		      let $originImage = document.querySelector('.origin-image');
+
+		      if(isScale) {
+			      $originImage.style.transform =  'scale(1,1)';
+		      } else {
+			      $originImage.style.transform =  'scale(1.5,1.5)';
+		      }
+		      isScale = !isScale;
+	      });
+      }
 		}
 	}
 </script>
