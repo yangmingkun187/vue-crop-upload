@@ -120,11 +120,7 @@
 		      _self.image.src = src;
 		      _self.image.width = img.naturalWidth;
 		      _self.image.height = img.naturalHeight;
-		      if(img.naturalWidth > img.naturalHeight) {
-			      _self.image.ratio =  img.naturalHeight / img.naturalWidth;
-		      } else {
-			      _self.image.ratio =  img.naturalWidth / img.naturalHeight;
-		      }
+          _self.image.ratio =  img.naturalHeight / img.naturalWidth;
 		      _self.initCropImageWrapper();
 	      }
       },
@@ -138,7 +134,7 @@
 	      document.querySelector('.visibility-container').style.cssText =
           'height:'+ screenWidth + 'px;margin-top:' + (-screenWidth / 2) + 'px';
 
-        _self.image.width = screenWidth;
+	      _self.image.width = screenWidth;
         _self.image.height = screenWidth * _self.image.ratio;
 
 	      document.querySelector('.origin-image').style.cssText =
