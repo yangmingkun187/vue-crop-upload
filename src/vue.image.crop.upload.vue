@@ -34,7 +34,7 @@
     top: 50%;
     left: 0;
     font-size: 0;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0) scale(1,1);
   }
 
   .origin-image img {
@@ -126,9 +126,7 @@
 </template>
 
 <script>
-	import Drag from './lib/drag';
-	import Zoom from './lib/zoom';
-	import Hammer from 'hammerjs';
+	import Touch from './lib/touch';
 
 	export default {
 		data() {
@@ -143,16 +141,10 @@
 				styleObj: {
 					coverHeight : 0
         },
-				event: {},
-				state: {rotate: true, doubletap: true}
 			}
 		},
 
 		methods: {
-			reset(e) {
-				console.log(e);
-      },
-
 			change(e) {
 				const _self = this;
 
@@ -200,28 +192,9 @@
       },
 
 			bindHammer() {
-	      let $originImage = document.querySelector('.origin-image');
-	      let $visibility = document.querySelector('.visibility-container');
-	      let hammertime = new Hammer($visibility);
-	      let isScale = false;
-
-	      hammertime.get('pinch').set({ enable: true });
-
-	      Drag(hammertime,$originImage,$visibility);
-
-
-	      hammertime.on('doubletap', function(ev) {
-		      ev.preventDefault();
-		      console.log(ev);
-		      let $originImage = document.querySelector('.origin-image');
-
-		      if(isScale) {
-			      $originImage.style.transform =  'scale(1,1)';
-		      } else {
-			      $originImage.style.transform =  'scale(1.5,1.5)';
-		      }
-		      isScale = !isScale;
-	      });
+	      let $imageWrapper = document.querySelector('.origin-image');
+	      let $container = document.querySelector('.visibility-container');
+				new Touch($container,$imageWrapper)
       }
 		}
 	}

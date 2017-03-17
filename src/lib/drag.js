@@ -1,4 +1,9 @@
-
+/*!
+ * Drag.js
+ * hammertime  hammerjs实例
+ * $originImage 原图dom
+ * $visibility 可移动div dom
+ */
 function Drag (hammertime,$originImage,$visibility) {
 	
 	if (!hammertime) {
@@ -12,14 +17,7 @@ function Drag (hammertime,$originImage,$visibility) {
 	_self.originImage = $originImage;
 	_self.visibility = $visibility;
 	
-	_self.originPosition = {
-		top: _self.originImage.offsetTop,
-		left: _self.originImage.offsetLeft,
-		bottom: _self.originImage.offsetTop + _self.originImage.offsetHeight,
-		right: _self.originImage.offsetLeft + _self.originImage.offsetWidth
-	};
-	console.log(_self.originImage.offsetTop);
-	console.log(_self.originImage.offsetHeight);
+	// visibility zone
 	_self.offsetRange = {
 		top: _self.visibility.offsetTop,
 		left: _self.visibility.offsetLeft,
@@ -27,8 +25,23 @@ function Drag (hammertime,$originImage,$visibility) {
 		right: _self.visibility.offsetLeft + _self.visibility.offsetWidth
 	};
 	
-	console.log(_self.visibility.offsetTop);
-	console.log(_self.visibility.offsetHeight);
+	// 创建图片的虚拟dom，使用transform做位移，避免重绘
+	_self.virtualImage = {
+		width: _self.originImage.offsetWidth,
+		height: _self.originImage.offsetHeight,
+		top: _self.originImage.offsetTop,
+		left: _self.originImage.offsetLeft,
+		bottom: _self.originImage.offsetTop + _self.originImage.offsetHeight,
+		right: _self.originImage.offsetLeft + _self.originImage.offsetWidth
+	};
+	
+	_self.imagePosition = {
+		top: _self.originImage.offsetTop,
+		left: _self.originImage.offsetLeft,
+		bottom: _self.originImage.offsetTop + _self.originImage.offsetHeight,
+		right: _self.originImage.offsetLeft + _self.originImage.offsetWidth
+	};
+	
 	
 	hammertime.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 	
@@ -52,9 +65,9 @@ function Drag (hammertime,$originImage,$visibility) {
 	hammertime.on('panend', function(ev) {
 		
 		let xCache = 0, yCache = 0;
-		console.log(_self.originPosition);
-		console.log(_self.originPosition);
 		// 右下角滑动
+		
+		
 		if (ev.deltaX >= 0 && ev.deltaY >= 0) {
 			
 			if (_self.originPosition.left + ev.deltaX > _self.offsetRange.left) {
@@ -62,10 +75,10 @@ function Drag (hammertime,$originImage,$visibility) {
 			} else {
 				xCache = ev.deltaX;
 			}
-			if (_self.originPosition.top + ev.deltaY > _self.originPosition.top) {
-				yCache = _self.offsetRange.top - _self.originPosition.top;
-			} else {
+			if (_self.originPosition.top + ev.deltaY > _self.offsetRange.top) {
 				yCache = ev.deltaY
+			} else {
+				yCache = _self.offsetRange.top - _self.originPosition.top;
 			}
 			
 		} else if (ev.deltaX >= 0 && ev.deltaY <= 0) {		// 右上角滑动
