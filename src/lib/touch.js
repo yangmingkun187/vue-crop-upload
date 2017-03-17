@@ -37,9 +37,15 @@ export default class Touch {
 	pan($imageWrapper,offsetRange,virtualImage) {
 		
 		let translateX = 0,
-			translateY = 0;
+			translateY = 0,
+			translate3dStr = 'translate3d(0,0,0) ',
+			scaleStr = 'scale(1,1)';
 		
 		let start = function(ev) {
+			let transformArray = $imageWrapper.style.transform.split('scale');
+			translate3dStr = transformArray[0] ? transformArray[0] : translate3dStr;
+			scaleStr = transformArray[1] ? 'scale' + transformArray[1] : scaleStr;
+			
 			$imageWrapper.style.transitionTimingFunction = '';
 			$imageWrapper.style.transitionDuration = '';
 		};
@@ -49,8 +55,8 @@ export default class Touch {
 				x: translateX + ev.deltaX,
 				y: translateY + ev.deltaY
 			};
-			
-			$imageWrapper.style.transform = 'translate3d(' + offset.x + 'px,' + offset.y + 'px,0) scale(1,1)';
+			translate3dStr = 'translate3d(' + offset.x + 'px,' + offset.y + 'px,0) ';
+			$imageWrapper.style.transform = translate3dStr + scaleStr;
 		};
 		
 		let end = function(ev) {
@@ -112,8 +118,9 @@ export default class Touch {
 			
 			translateX = xCache;
 			translateY = yCache;
+			translate3dStr = 'translate3d(' + xCache + 'px,' + yCache + 'px,0) ';
 			
-			$imageWrapper.style.transform = 'translate3d(' + xCache + 'px,' + yCache + 'px,0) scale(1,1)';
+			$imageWrapper.style.transform = translate3dStr + scaleStr;
 			$imageWrapper.style.transitionTimingFunction = 'cubic-bezier(0.1, 0.57, 0.1, 1)';
 			$imageWrapper.style.transitionDuration = '700ms';
 		};
