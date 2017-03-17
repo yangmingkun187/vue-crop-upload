@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=production webpack --progress --hide-modules && node webpack.config.dev.js",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --watch"
   },
   "dependencies": {
     "hammerjs": "^2.0.8",
